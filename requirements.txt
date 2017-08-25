@@ -1,0 +1,10 @@
+setuptools
+django==1.10
+requests
+djangorestframework==3.6.2
+coverage
+django-nose
+mock
+mysql-python
+django-rest-swagger
+pika
