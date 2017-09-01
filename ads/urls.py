@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from api.views import deploy,deploy_status,deploy_log
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='PGA ADS API')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/v1/deploy_status$',deploy_status, name='v1-deploy-status'),
+    url(r'^api/v1/deploy$', deploy, name='v1-deploy'),
+    url(r'^api/v1/deploy_log$', deploy_log, name='v1-deploy-log'),
+    url(r'^docs/', schema_view),
 ]

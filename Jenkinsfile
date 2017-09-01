@@ -9,7 +9,7 @@ podTemplate(label: "${label}", containers: [
             containerEnvVar(key: 'MYSQL_ROOT_HOST', value: '%'),
         ]),
     containerTemplate(name: 'rabbitmq', image: "harborbj01.jcloud.com/iaas/rabbitmq:3.6.11"),
-    containerTemplate(name: 'python', image: 'harborbj01.jcloud.com/iaas/jenkins-slave-python:2.7.13.4',ttyEnabled: true,command:'cat')
+    containerTemplate(name: 'python', image: 'harborbj01.jcloud.com/iaas/jenkins-slave-python:2.7.13.6',ttyEnabled: true,command:'cat')
   ]) {
     node("${label}") {
         stage('checkout code') {
@@ -18,6 +18,12 @@ podTemplate(label: "${label}", containers: [
             branch = sh(returnStdout:true, script:"git branch -a --contains ${commit} | grep remotes | grep -v master | tail -1"); branch = branch.trim()
         }
         stage('test and package') {
+            container('mysql') {
+                sh """
+                    bash check-mysql.sh
+                    bash init-mysql-database.sh
+                """
+            }
             container('python') {
                 sh """
                     bash unittest.sh

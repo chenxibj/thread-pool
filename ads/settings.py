@@ -26,7 +26,7 @@ SECRET_KEY = 'ii_90^8qt!yfnnxe3t!zp20=s3f1$wt@-j2n0%8g7(+9tsr63m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.242.128"]
 
 
 # Application definition
@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_swagger',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -76,9 +78,13 @@ WSGI_APPLICATION = 'ads.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ads',
+        'USER': os.environ['MYSQL_USER'],
+        'PASSWORD': os.environ['MYSQL_PASS'],
+        'HOST': os.environ['MYSQL_HOST'],
+        'PORT': os.environ['MYSQL_PORT'],
+    },
 }
 
 
@@ -133,15 +139,13 @@ sys.path.append(os.path.join(BASE_DIR, 'libs'))
 sys.path.append(os.path.join(BASE_DIR, 'node_check'))
 sys.path.append(os.path.join(BASE_DIR, 'node_deploy'))
 sys.path.append(os.path.join(BASE_DIR, 'node_logger'))
-
-
+LOG_PATH = "/tmp/chef-client.log"
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
         'django': {
-            '()': 'django.utils.log.ServerFormatter',
             'format': '%(asctime)s - %(levelname)s - %(filename)s - %(thread)d: %(message)s',
         }
     },
@@ -163,3 +167,13 @@ LOGGING = {
     },
 }
 
+SWAGGER_SETTINGS = {
+    'JSON_EDITOR': True,
+    'SHOW_REQUEST_HEADERS': True,
+    'VALIDATOR_URL': None,
+    #'SUPPORTED_SUBMIT_METHODS': ['get', 'post', 'put', 'delete', 'patch'],
+    'SUPPORTED_SUBMIT_METHODS': ['get', 'post', 'delete', 'put'],
+}
+
+RABBITMQ_HOST= os.environ['RABBITMQ_HOST']
+RABBITMQ_PORT= int(os.environ['RABBITMQ_PORT'])

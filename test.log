@@ -1,0 +1,4 @@
+2017-09-01 11:30:10,498 - INFO - base_connection.py - 139894732367680: Connecting to ::1:5672
+2017-09-01 11:30:10,507 - INFO - blocking_connection.py - 139894732367680: Created channel=1
+2017-09-01 11:30:10,510 - INFO - base_connection.py - 139894732367680: Connecting to ::1:5672
+2017-09-01 11:30:10,516 - INFO - blocking_connection.py - 139894732367680: Created channel=1
