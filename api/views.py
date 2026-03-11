@@ -134,7 +134,7 @@ def deploy_log(request):
     if deploy_request.product not in RemoteLogPath:
         err_msg = "no remote log path available configured for {}".format(deploy_request.product)
         logger.error(err_msg)
-        Response({"status":{"code":"FAIL","msg":err_msg},"log":""},status=status.HTTP_200_OK)
+        return Response({"status":{"code":"FAIL","msg":err_msg},"log":""},status=status.HTTP_200_OK)
     contents = fetchLog(host_ip,RemoteLogPath[deploy_request.product])
     return Response({"status":{"code":"SUCCESS","msg":""},"log":contents},status=status.HTTP_200_OK)
 
